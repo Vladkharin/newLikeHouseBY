@@ -1,0 +1,36 @@
+@font-face {
+	font-family: 'FuturaPTWebCondMedium';
+	src: 
+		url('futura-pt_cond-medium.woff2') format('woff2'),
+		url('futura-pt_cond-medium.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'FuturaPTWebBook';
+	src: 
+		url('futura-pt_book.woff2') format('woff2'),
+		url('futura-pt_book.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+@font-face {
+	font-family: 'FuturaPTWebBold';
+	src: 
+		url('futura-pt_bold.woff2') format('woff2'),
+		url('futura-pt_bold.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'FuturaPTWebLight';
+	src: 
+		url('futura-pt_light.woff2') format('woff2'),
+		url('futura-pt_light.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
