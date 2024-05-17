@@ -196,17 +196,17 @@ window.addEventListener('DOMContentLoaded', () => {
             typeHouse: 'Эркерия',
             code: '000000039'
         },
-        {
-            img: './assets/img/Видовой_кадр_01_10x10.jpg',
-            alt: 'firstTile',
-            size: 'Размер: 10x10',
-            square: 'Площадь: 73 м2',
-            coust:  'Стоимость: <span></span> руб',
-            type: 'cottage',
-            link: '10x10.html',
-            typeHouse: 'Галант',
-            code: '000000040'
-        },
+        // {
+        //     img: './assets/img/Видовой_кадр_01_10x10.jpg',
+        //     alt: 'firstTile',
+        //     size: 'Размер: 10x10',
+        //     square: 'Площадь: 73 м2',
+        //     coust:  'Стоимость: <span></span> руб',
+        //     type: 'cottage',
+        //     link: '10x10.html',
+        //     typeHouse: 'Галант',
+        //     code: '000000040'
+        // },
         {
             img: './assets/img/Видовой_кадр_01_8x10.jpg',
             alt: 'firstTile',
