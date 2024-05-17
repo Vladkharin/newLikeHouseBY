@@ -757,20 +757,23 @@ buttonWrappers.addEventListener('click', (e) => {
     
             if (btn.classList.contains('inactiveBtn')) {
                 const id = btn.parentNode.getAttribute('id')
-
                 const nameService = btn.parentNode.dataset.name
 
-                if (id === '000000126' || id === '000000127'){
+
+                if (id === '000000127' || id === '000000126'){
                     return
                 }
+    
                 listAdditionalServices.push(nameService)
+
 
                 let choiceElsId = ''
                 let choice = ''
 
+
                 if (choiceobj['cant choose without'][id]) {
                     choiceElsId = choiceobj['cant choose without'][id]
-                    choice = 'cant choose without'
+                        choice = 'cant choose without'
                 } else if (choiceobj['mutually exclusive'][id]){
                     choiceElsId = choiceobj['mutually exclusive'][id]
                     choice = 'mutually exclusive'
@@ -779,7 +782,6 @@ buttonWrappers.addEventListener('click', (e) => {
                 if (choiceElsId && choice == 'mutually exclusive') {
 
                     choiceElsId.forEach(elId => {
-                        
                         const el = document.getElementById(`${elId}`)
                         
                         let elChildren = ''
@@ -788,35 +790,42 @@ buttonWrappers.addEventListener('click', (e) => {
                         } else {
                             elChildren = el.children[0]
                         }
+                        
+                        const dataEl = el.dataset.name
+
                         if (choiceobj['cant choose without'][`${elId}`]){
+
                             const choiceEls = choiceobj['cant choose without'][`${elId}`]
                             choiceEls.forEach(choiceElId => {
-                                const choiceEl = document.getElementById(`${choiceElId}`).children[0]
-                                const index = listAdditionalServices.indexOf(choiceElId)
+                                const choiceEl = document.getElementById(`${choiceElId}`)
+                                const choiceElChildren = choiceEl.children[0]
+                                const choiceElData = choiceElId.dataset.name
+                                const index = listAdditionalServices.indexOf(choiceElData)
 
                                 if (index !== -1) {
                                     listAdditionalServices.splice(index, 1)
-                                    choiceEl.classList.add('inactiveBtn')
-                                    choiceEl.classList.remove('activeBtn')
-                                    priceChange -= +choiceEl.getAttribute('value')
+                                    choiceElChildren.classList.add('inactiveBtn')
+                                    choiceElChildren.classList.remove('activeBtn')
+                                    priceChange -= +choiceElChildren.getAttribute('value')
                                 }
                             })
                         }
-                        
+
                         if(elChildren.classList.contains('activeBtn')){
+
                             elChildren.classList.remove('activeBtn')
                             elChildren.classList.add('inactiveBtn')
                             
                             priceChange -= +elChildren.getAttribute('value')
-                            const index = listAdditionalServices.indexOf(elId)
-    
+                            const index = listAdditionalServices.indexOf(dataEl)
+
                             if(index != -1) {
                                 listAdditionalServices.splice(index, 1)
                             }
                         }
-
                     })
                 } else if (choiceElsId && choice == 'cant choose without'){
+
                     choiceElsId.forEach(elId => {
                         const el = document.getElementById(`${elId}`)
                         
@@ -826,19 +835,21 @@ buttonWrappers.addEventListener('click', (e) => {
                         } else {
                             elChildren = el.children[0]
                         }
+
+                        const dataEl = el.dataset.name
+
                         if (choiceobj['mutually exclusive'][id]){
                             const choiceEls = choiceobj['mutually exclusive'][id]
                             choiceEls.forEach(choiceElId => {
                                 if (choiceobj['cant be removed without'][elId]){
-                                    const element = document.getElementById(`${elId}`).children[0]
-                                    const indexEl = listAdditionalServices.indexOf(elId)
 
+                                    const indexEl = listAdditionalServices.indexOf(dataEl)
 
                                     if (indexEl !== -1) {
                                         listAdditionalServices.splice(indexEl, 1)
-                                        priceChange -= +element.getAttribute('value')
-                                        element.classList.add('inactiveBtn')
-                                        element.classList.remove('activeBtn')
+                                        priceChange -= +elChildren.getAttribute('value')
+                                        elChildren.classList.add('inactiveBtn')
+                                        elChildren.classList.remove('activeBtn')
                                     }
                                 }
 
@@ -846,14 +857,16 @@ buttonWrappers.addEventListener('click', (e) => {
                                     return
                                 }
 
-                                const choiceEl = document.getElementById(`${choiceElId}`).children[0]
-                                const index = listAdditionalServices.indexOf(choiceElId)
+                                const choiceEl = document.getElementById(`${choiceElId}`)
+                                const choiceElChildren = choiceEl.children[0]
+                                const choiceElData = choiceElId.dataset.name
+                                const index = listAdditionalServices.indexOf(choiceElData)
                                 
                                 if (index !== -1) {
                                     listAdditionalServices.splice(index, 1)
-                                    priceChange -= +choiceEl.getAttribute('value')
-                                    choiceEl.classList.add('inactiveBtn')
-                                    choiceEl.classList.remove('activeBtn')
+                                    priceChange -= +choiceElChildren.getAttribute('value')
+                                    choiceElChildren.classList.add('inactiveBtn')
+                                    choiceElChildren.classList.remove('activeBtn')
                                 }
                                 
                             })
@@ -867,47 +880,42 @@ buttonWrappers.addEventListener('click', (e) => {
                             const index = listAdditionalServices.indexOf(elId)
     
                             if(index == -1) {
-                                listAdditionalServices.push(elId)
+                                listAdditionalServices.push(nameService)
                             }
                         }
                     })
                 }
 
+                
                 btn.classList.add('activeBtn')
                 btn.classList.remove('inactiveBtn')
                 priceChange += value
 
             } else {
+
                 const id = btn.parentNode.getAttribute('id')
+                const nameService = btn.parentNode.dataset.name
 
-                if (id === 'Устройство колодца'){
+                if (id === '000000127'){
                     
-                    let secondInput = document.getElementById(`${COAST_FOUNTAIN + 'input'}`)
-                    let secondInputCounters = document.getElementById(`${COAST_FOUNTAIN + 'numberCounter'}`)
-                    let secondInputProgressBar = document.getElementById(`${COAST_FOUNTAIN + 'progressBar'}`)
+                    let secondInput = document.getElementById(`000000127`).nextElementSibling.children[1]
 
-                    secondInputProgressBar.style.width = 0 + 'px'
-                    secondInputCounters.style.left = 0 + 'px'
-                    secondInputCounters.textContent = 0
                     secondInput.value = 0
 
                     inputPriceChange = 0
                     
                     cost.textContent = startCost + priceChange + inputPriceChange
-                } else if (id === 'Скважина Пластик'){
 
-                    let firstInput = document.getElementById(`${COAST_WELL + 'input'}`)
-                    let firstInputCounters = document.getElementById(`${COAST_WELL + 'numberCounter'}`)
-                    let firstInputProgressBar = document.getElementById(`${COAST_WELL + 'progressBar'}`)
+                } else if (id === '000000126'){
 
-                    firstInputProgressBar.style.width = 0 + 'px'
-                    firstInputCounters.style.left = 0 + 'px'
-                    firstInputCounters.textContent = 0
+                    let firstInput = document.getElementById(`000000126`).nextElementSibling.children[1]
+
                     firstInput.value = 0
 
                     inputPriceChange = 0
                     
                     cost.textContent = startCost + priceChange + inputPriceChange
+
                 }
 
                 let choiceElsId = ''
@@ -932,7 +940,9 @@ buttonWrappers.addEventListener('click', (e) => {
                             elChildren = el.children[0]
                         }
 
-                        const indexEl = listAdditionalServices.indexOf(elId)
+                        const dataEl = el.dataset.name
+
+                        const indexEl = listAdditionalServices.indexOf(dataEl)
                         if (indexEl !== -1) {
 
                             listAdditionalServices.splice(indexEl, 1)
@@ -943,7 +953,7 @@ buttonWrappers.addEventListener('click', (e) => {
                         }
                         
                     })      
-                    const indexEl = listAdditionalServices.indexOf(id)
+                    const indexEl = listAdditionalServices.indexOf(nameService)
                     listAdditionalServices.splice(indexEl, 1)
                 } else if (choiceElsId && choice == 'cant choose without') {
 
@@ -956,7 +966,9 @@ buttonWrappers.addEventListener('click', (e) => {
                         } else {
                             elChildren = el.children[0]
                         }
-                        const indexEl = listAdditionalServices.indexOf(elId)
+                        const dataEl = el.dataset.name
+
+                        const indexEl = listAdditionalServices.indexOf(dataEl)
 
                         if (indexEl !== -1){
 
@@ -969,12 +981,11 @@ buttonWrappers.addEventListener('click', (e) => {
                         }
     
                     })                
-                    const indexEl = listAdditionalServices.indexOf(id)
+                    const indexEl = listAdditionalServices.indexOf(nameService)
                     listAdditionalServices.splice(indexEl, 1)
                 } else {
-
-                    if (id === 'Хауберк фасадная плитка') {
-                        const facadeImitation = document.getElementById('Имитация бруса').querySelector('button')
+                    if (id === '000000102' || id === '000000101') {
+                        const facadeImitation = document.getElementById('000000144').querySelector('button')
 
                         if (facadeImitation.classList.contains('inactiveBtn')) {
                             listAdditionalServices.push('Имитация бруса')
@@ -988,20 +999,21 @@ buttonWrappers.addEventListener('click', (e) => {
                         return
                     }
 
-                    const indexEl = listAdditionalServices.indexOf(id)
+                    const indexEl = listAdditionalServices.indexOf(nameService)
                     listAdditionalServices.splice(indexEl, 1)
                 }
 
+                
                 btn.classList.add('inactiveBtn')
                 btn.classList.remove('activeBtn')
                 priceChange -= value
 
             }
 
-    
             cost.textContent = startCost + priceChange + inputPriceChange
-
         }
+
+        console.log(listAdditionalServices)
     }
 })
 
