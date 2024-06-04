@@ -134,7 +134,7 @@ window.addEventListener('DOMContentLoaded', () => {
             img: './assets/img/Видовой_кадр_01_8x11.jpg',
             alt: 'firstTile',
             size: 'Размер: 8x11',
-            square: 'Площадь: 120 м2',
+            square: 'Площадь: 124 м2',
             coust:  'Стоимость: <span></span> руб',
             type: 'two-storey house', 
             link: '8x11.html',
@@ -145,7 +145,7 @@ window.addEventListener('DOMContentLoaded', () => {
             img: './assets/img/Видовой_кадр_01_8x11.8.jpg',
             alt: 'firstTile',
             size: 'Размер: 8x11.8',
-            square: 'Площадь: 120 м2',
+            square: 'Площадь: 128 м2',
             coust:  'Стоимость: <span></span> руб',
             type: 'two-storey house', 
             link: '8x11.8.html',
@@ -167,7 +167,7 @@ window.addEventListener('DOMContentLoaded', () => {
             img: './assets/img/Видовой_кадр_01_8.5x11.jpg',
             alt: 'firstTile',
             size: 'Размер: 8.5x11',
-            square: 'Площадь: 71 м2',
+            square: 'Площадь: 130 м2',
             coust:  'Стоимость: <span></span> руб',
             type: 'two-storey house',
             link: '8.5x11.html',
@@ -178,7 +178,7 @@ window.addEventListener('DOMContentLoaded', () => {
             img: './assets/img/Видовой_кадр_01_9.5x10.jpg',
             alt: 'firstTile',
             size: 'Размер: 9.5x10',
-            square: 'Площадь: 133 м2',
+            square: 'Площадь: 128 м2',
             coust:  'Стоимость: <span></span> руб',
             type: 'two-storey house',
             link: '9.5x10.html',
@@ -189,24 +189,25 @@ window.addEventListener('DOMContentLoaded', () => {
             img: './assets/img/Видовой_кадр_01_9.5x12.jpg',
             alt: 'firstTile',
             size: 'Размер: 9.5x12',
-            square: 'Площадь: 153 м2',
+            square: 'Площадь: 163 м2',
             coust:  'Стоимость: <span></span> руб',
             type: 'two-storey house',
             link: '9.5x12.html',
             typeHouse: 'Эркерия',
             code: '000000039'
         },
-        // {
-        //     img: './assets/img/Видовой_кадр_01_10x10.jpg',
-        //     alt: 'firstTile',
-        //     size: 'Размер: 10x10',
-        //     square: 'Площадь: 73 м2',
-        //     coust:  'Стоимость: <span></span> руб',
-        //     type: 'cottage',
-        //     link: '10x10.html',
-        //     typeHouse: 'Галант',
-        //     code: '000000040'
-        // },
+        {
+            img: './assets/img/Видовой_кадр_01_10x10.jpg',
+            alt: 'firstTile',
+            size: 'Размер: 10x10',
+            square: 'Площадь: 73 м2',
+            coust:  'Стоимость: Скоро будут доступны',
+            mortgage: 'Стоимость: Скоро будут доступны',
+            type: 'cottage',
+            link: '10x10.html',
+            typeHouse: 'Галант',
+            code: '000000040'
+        },
         {
             img: './assets/img/Видовой_кадр_01_8x10.jpg',
             alt: 'firstTile',
@@ -221,7 +222,7 @@ window.addEventListener('DOMContentLoaded', () => {
         {
             img: './assets/img/Видовой_кадр_01_8x10_(2_спальни).jpg',
             alt: 'firstTile',
-            size: 'Размер: 8х10( 2 спальни)',
+            size: 'Размер: 8х10 (2 спальни)',
             square: 'Площадь: 73 м2',
             coust:  'Стоимость: <span></span> руб',
             type: 'cottage',
@@ -241,7 +242,7 @@ window.addEventListener('DOMContentLoaded', () => {
             code: '000000019'
         },
         {
-            img: './assets/img/Видовой_кадр_01_8x12.jpg',
+            img: './assets/img/Видовой_кадр_01_8x13_country.jpg',
             alt: 'firstTile',
             size: 'Размер: 8х13',
             square: 'Площадь: 87 м2',
@@ -284,7 +285,6 @@ window.addEventListener('DOMContentLoaded', () => {
             typeHouse: 'Классик',
             code: '000000043'
         },
-        
         {
             img: './assets/img/Видовой_кадр_01_8x8.jpg',
             alt: 'firstTile',
@@ -319,6 +319,17 @@ window.addEventListener('DOMContentLoaded', () => {
             code: '000000045'
         },
         {
+            img: './assets/img/Видовой_кадр_01_9.5x13.jpg',
+            alt: 'firstTile',
+            size: 'Размер: 9.5x13',
+            square: 'Площадь: 108 м2',
+            coust:  'Стоимость: <span></span> руб',
+            type: 'cottage',
+            link: '9.5x13.html',
+            typeHouse: 'Архитект',
+            code: '000000044'
+        },
+        {
             img: './assets/img/Видовой_кадр_01_8.5x12.jpg',
             alt: 'firstTile',
             size: 'Размер: 8.5x12',
@@ -341,7 +352,7 @@ window.addEventListener('DOMContentLoaded', () => {
             code: '000000008'
         },
         {
-            img: './assets/img/Видовой_кадр_01_7x8_cottage.jpg',
+            img: './assets/img/Видовой_кадр_01_5x7.jpg',
             alt: 'firstTile',
             size: 'Размер: 5x7',
             square: 'Площадь: 50 м2',
@@ -352,7 +363,7 @@ window.addEventListener('DOMContentLoaded', () => {
             code: '000000047'
         },
         {
-            img: './assets/img/Видовой_кадр_01_6x6.jpg',
+            img: './assets/img/Видовой_кадр_01_7x7_attic.jpg',
             alt: 'firstTile',
             size: 'Размер: 7x7',
             square: 'Площадь: 71 м2',
@@ -367,7 +378,7 @@ window.addEventListener('DOMContentLoaded', () => {
             alt: 'twentyFourthTile',
             size: 'Размер: 5х6',
             square: 'Площадь: 26 м2',
-            coust:  'Стоимость: <span></span> руб',
+            coust:  'Стоимость: Скоро будут доступны',
             type: 'bathhouse',
             link: '5x6-bath.html',
             typeHouse: 'Бани',
@@ -378,7 +389,7 @@ window.addEventListener('DOMContentLoaded', () => {
             alt: 'twentyFifthTile',
             size: 'Размер: 8х7',
             square: 'Площадь: 33 м2',
-            coust:  'Стоимость: <span></span> руб',
+            coust:  'Стоимость: Скоро будут доступны',
             type: 'bathhouse',
             link: '8x7-bath.html',
             typeHouse: 'Бани',
@@ -923,6 +934,7 @@ window.addEventListener('DOMContentLoaded', () => {
             }
             
             let children = codeElement.children[0]
+            let nextSib = codeElement.nextElementSibling.children[0]
             cost = 0
 
             house['Разделы'].forEach(subsection => {
@@ -936,6 +948,12 @@ window.addEventListener('DOMContentLoaded', () => {
                             cost += item['Стоимость']
                         }
                     })
+                } else if (subsection['Раздел'] == 'Внутренняя отделка и комфорт') {
+                    subsection['Подразделы'].forEach(item => {
+                        if (item['Подраздел'] == 'Стены и потолки: имитация бруса') {
+                            cost += item['Стоимость']
+                        }
+                    })
                 }
             })
 
@@ -943,5 +961,4 @@ window.addEventListener('DOMContentLoaded', () => {
             children.textContent = cost
         })
     }
-
 })

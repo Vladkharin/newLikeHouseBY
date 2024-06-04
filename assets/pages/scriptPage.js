@@ -6,26 +6,26 @@ let startCost = 0;
 const choiceobj = {
     'mutually exclusive':{
         '000000102': ['000000101', '000000105', '000000144'],
-        '000000101': ['000000102', '000000144'],
-        '000000105': ['000000102'],
-        '000000144': ['000000102', '000000101'],
+        '000000101': ['000000102'],
+        '000000105': ['000000102', '000000144'],
+        '000000144': ['000000102', '000000105'],
+        '000000106': ['000000132'],
         '000000108': ['000000107'],
         '000000107': ['000000108'],
-        // 'Отделка стен санузла ПВХ панелями (из коллеции ЛХ)': ['000000110'],
-        // '000000110': ['Отделка стен санузла ПВХ панелями (из коллеции ЛХ)'],
         '000000114': ['000000138'],
         '000000138': ['000000114', '000000132', '000000131', '000000122'],
         '000000120': ['000000121'],
         '000000121': ['000000120'],
         '000000131': ['000000130', '000000138'],
-        '000000132': ['000000130', '000000138'],
-        '000000130': ['000000132'],
+        '000000132': ['000000130', '000000138', '000000106'],
         '000000130': ['000000131'],
         '000000133': ['000000134', '000000135'],
         '000000134': ['000000133', '000000135'],
         '000000135': ['000000134', '000000133'],
         '000000124': ['000000125'],
         '000000125': ['000000124'],
+        '000000110': ['000000109'],
+        '000000109': ['000000110']
     },
     'cant choose without': {
         '000000131' : ['000000122'],
@@ -33,9 +33,10 @@ const choiceobj = {
     },
     'cant be removed without': {
         '000000130' : ['000000138'],
-        '000000122': ['000000131']
-    }
+        '000000122': ['000000131'],
+        '000000101' : ['000000144'],
 
+    }
 }
 
 let listAdditionalServices = []
@@ -103,7 +104,7 @@ async function createAdditionalServices(func) {
             COAST_FOUNTAIN = item['Стоимость']
             return `
                 <div class="secondBlock__service">
-                    <div class="secondBlock__service-button" id="${item['Код']}" data-name="${item['Подраздел']}">
+                    <div class="secondBlock__service-button" id="Устройство колодца">
                         <button class="secondBlock__service-buttonSelector inactiveBtn"></button>
                     </div>
                     <div class="secondBlock__service-text">
@@ -116,7 +117,7 @@ async function createAdditionalServices(func) {
             COAST_WELL = item['Стоимость']
             return `
                 <div class="secondBlock__service">
-                    <div class="secondBlock__service-button" id="${item['Код']}" data-name="${item['Подраздел']}">
+                    <div class="secondBlock__service-button" id="Скважина Пластик">
                         <button class="secondBlock__service-buttonSelector inactiveBtn"></button>
                     </div>
                     <div class="secondBlock__service-text">
@@ -133,10 +134,16 @@ async function createAdditionalServices(func) {
                 mainCost.textContent = startCost
                 activeClass = 'activeBtn'
                 listAdditionalServices.push('Имитация бруса')
+            } else if (item['Код'] == '000000132') {
+                startCost += item['Стоимость']
+                cost.textContent = startCost
+                mainCost.textContent = startCost
+                activeClass = 'activeBtn'
+                listAdditionalServices.push('Стены и потолки: имитация бруса')
             }
             return `
                 <div class="secondBlock__service">
-                    <div class="secondBlock__service-button" id="${item['Код']}" data-name="${item['Подраздел']}">
+                    <div class="secondBlock__service-button" id="${item['Код']}">
                         <button class="secondBlock__service-buttonSelector ${activeClass}" value="${item['Стоимость']}"></button>
                     </div>
                     <div class="secondBlock__service-text">${item['Подраздел']} + ${item['Стоимость']} руб.</div>
@@ -233,24 +240,8 @@ nextModal.addEventListener('click', function(){
 const buttonWrappers = document.querySelector('.secondBlock__services');
 const selectionMenu = document.querySelector('.secondBlockMenu__menu')
 
-// buttonWrappers.addEventListener('click', (e) => {
-//     if (e.target.classList.contains('secondBlock__service-button')) {
-//         if(selectionMenu.classList.contains('notVisible')){
-//             selectionMenu.classList.remove('notVisible')
-//             selectionMenu.classList.add('visible')
-//         } else {
-//             selectionMenu.classList.remove('visible')
-//             selectionMenu.classList.add('notVisible')
-//         }
-//     }
-// })
-
 let priceChange = 0;
 let inputPriceChange = 0
-
-
-
-
 
 let firstPrice = 0;
 let firstPositionInput = 0;
@@ -260,41 +251,15 @@ let secondPrice = 0;
 
 buttonWrappers.addEventListener('input', (e) => {
 
-    const firstInput = document.getElementById(`000000126`)
-    const secondInput = document.getElementById(`000000127`)
-    const firstInputCounters = document.getElementById(`${COAST_WELL + 'numberCounter'}`)
-    const secondInputCounters = document.getElementById(`${COAST_FOUNTAIN + 'numberCounter'}`)
-    const firstInputProgressBar = document.getElementById(`${COAST_WELL + 'progressBar'}`)
-    const secondInputProgressBar = document.getElementById(`${COAST_FOUNTAIN + 'progressBar'}`)
-    const firstActiveButton = document.getElementById('000000126').querySelector('button')
-    const secondActiveButton = document.getElementById('000000127').querySelector('button')
+    const firstInput = document.getElementById(`Скважина Пластик`)
+    const secondInput = document.getElementById(`Устройство колодца`)
+    const firstActiveButton = document.getElementById('Скважина Пластик').querySelector('button')
+    const secondActiveButton = document.getElementById('Устройство колодца').querySelector('button')
 
-    if (e.target.classList.contains('secondBlock__service-input') && e.target.parentNode.previousElementSibling.getAttribute('id') === '000000126') {
+    if (e.target.classList.contains('secondBlock__service-input') && e.target.parentNode.previousElementSibling.getAttribute('id') === 'Скважина Пластик') {
+
+
         let value = e.target.value
-
-        e.target.addEventListener('focusout', () => {
-            
-            if (e.target.value == '') {
-                e.target.value = 0
-
-                firstActiveButton.classList.add('inactiveBtn')
-                firstActiveButton.classList.remove('activeBtn')
-
-                const index = listAdditionalServices.indexOf(`Количество метров: ${firstPositionInput}`)
-
-                if (index != -1) {
-                    listAdditionalServices.splice(index, 1)
-                }
-
-                inputPriceChange -= firstPositionInput * COAST_WELL
-                firstPrice = 0
-                firstPositionInput = value
-
-                cost.textContent = startCost + priceChange + inputPriceChange
-
-            }
-        })
-
 
         if (value == ''){
             return
@@ -378,31 +343,9 @@ buttonWrappers.addEventListener('input', (e) => {
 
         cost.textContent = startCost + priceChange + inputPriceChange
 
-    } else if (e.target.classList.contains('secondBlock__service-input') && e.target.parentNode.previousElementSibling.getAttribute('id') === '000000127') {
+    } else if (e.target.classList.contains('secondBlock__service-input') && e.target.parentNode.previousElementSibling.getAttribute('id') === 'Устройство колодца') {
+
         let value = e.target.value
-
-        e.target.addEventListener('focusout', () => {
-            
-            if (e.target.value == '') {
-                e.target.value = 0
-
-                firstActiveButton.classList.add('inactiveBtn')
-                firstActiveButton.classList.remove('activeBtn')
-
-                const index = listAdditionalServices.indexOf(`Количество метров: ${secondPositionInput}`)
-
-                if (index != -1) {
-                    listAdditionalServices.splice(index, 1)
-                }
-
-                inputPriceChange -= secondPositionInput * COAST_FOUNTAIN
-                secondPrice = 0
-                secondPositionInput = value
-
-                cost.textContent = startCost + priceChange + inputPriceChange
-
-            }
-        })
 
         if (value == ''){
             return
@@ -492,17 +435,26 @@ buttonWrappers.addEventListener('click', (e) => {
             const btn = target.querySelector('button')
             const value = +btn.value
 
-            
             if (btn.classList.contains('inactiveBtn')) {
                 const id = btn.parentNode.getAttribute('id')
-                const nameService = btn.parentNode.dataset.name
 
-
-                if (id === '000000127' || id === '000000126'){
+                if (id === 'Скважина Пластик' || id === 'Устройство колодца'){
                     return
                 }
+
+                if (id === '000000101'){
+                    const el = document.getElementById('000000144').children[0]
+                    const secondEl = document.getElementById('000000105').children[0]
+                    if (el.classList.contains('inactiveBtn') && secondEl.classList.contains('inactiveBtn')){
+
+                        priceChange += +el.getAttribute('value')
+                        el.classList.add('activeBtn')
+                        el.classList.remove('inactiveBtn')
+                        listAdditionalServices.push('Имитация бруса')
+                    }
+                }
     
-                listAdditionalServices.push(nameService)
+                listAdditionalServices.push(id)
 
 
                 let choiceElsId = ''
@@ -511,59 +463,52 @@ buttonWrappers.addEventListener('click', (e) => {
 
                 if (choiceobj['cant choose without'][id]) {
                     choiceElsId = choiceobj['cant choose without'][id]
-                        choice = 'cant choose without'
+                    choice = 'cant choose without'
                 } else if (choiceobj['mutually exclusive'][id]){
                     choiceElsId = choiceobj['mutually exclusive'][id]
                     choice = 'mutually exclusive'
                 }
 
                 if (choiceElsId && choice == 'mutually exclusive') {
-
                     choiceElsId.forEach(elId => {
                         const el = document.getElementById(`${elId}`)
-                        
                         let elChildren = ''
                         if(!el) {
                             return
                         } else {
                             elChildren = el.children[0]
                         }
-                        
-                        const dataEl = el.dataset.name
 
                         if (choiceobj['cant choose without'][`${elId}`]){
-
                             const choiceEls = choiceobj['cant choose without'][`${elId}`]
                             choiceEls.forEach(choiceElId => {
-                                const choiceEl = document.getElementById(`${choiceElId}`)
-                                const choiceElChildren = choiceEl.children[0]
-                                const choiceElData = choiceElId.dataset.name
-                                const index = listAdditionalServices.indexOf(choiceElData)
+                                const choiceEl = document.getElementById(`${choiceElId}`).children[0]
+                                const index = listAdditionalServices.indexOf(choiceElId)
 
                                 if (index !== -1) {
                                     listAdditionalServices.splice(index, 1)
-                                    choiceElChildren.classList.add('inactiveBtn')
-                                    choiceElChildren.classList.remove('activeBtn')
-                                    priceChange -= +choiceElChildren.getAttribute('value')
+                                    choiceEl.classList.add('inactiveBtn')
+                                    choiceEl.classList.remove('activeBtn')
+                                    priceChange -= +choiceEl.getAttribute('value')
                                 }
                             })
                         }
 
                         if(elChildren.classList.contains('activeBtn')){
-
                             elChildren.classList.remove('activeBtn')
                             elChildren.classList.add('inactiveBtn')
                             
                             priceChange -= +elChildren.getAttribute('value')
-                            const index = listAdditionalServices.indexOf(dataEl)
-
+                            const index = listAdditionalServices.indexOf(elId)
+    
                             if(index != -1) {
                                 listAdditionalServices.splice(index, 1)
                             }
                         }
+
+
                     })
                 } else if (choiceElsId && choice == 'cant choose without'){
-
                     choiceElsId.forEach(elId => {
                         const el = document.getElementById(`${elId}`)
                         
@@ -573,32 +518,38 @@ buttonWrappers.addEventListener('click', (e) => {
                         } else {
                             elChildren = el.children[0]
                         }
-
-                        const dataEl = el.dataset.name
-
+                        
                         if (choiceobj['mutually exclusive'][id]){
                             const choiceEls = choiceobj['mutually exclusive'][id]
                             choiceEls.forEach(choiceElId => {
                                 if (choiceobj['cant be removed without'][elId]){
-
-                                    const indexEl = listAdditionalServices.indexOf(dataEl)
+                                    const element = document.getElementById(`${choiceElId}`)
+                                    let elementChildren = ''
+                                    if(!element){
+                                        return
+                                    } else {
+                                        elementChildren = element.children[0]
+                                    }
+                                    
+                                    const indexEl = listAdditionalServices.indexOf(choiceElId)
 
                                     if (indexEl !== -1) {
                                         listAdditionalServices.splice(indexEl, 1)
-                                        priceChange -= +elChildren.getAttribute('value')
-                                        elChildren.classList.add('inactiveBtn')
-                                        elChildren.classList.remove('activeBtn')
+                                        priceChange -= +elementChildren.getAttribute('value')
+                                        elementChildren.classList.add('inactiveBtn')
+                                        elementChildren.classList.remove('activeBtn')
                                     }
                                 }
 
-                                if (!document.getElementById(`${choiceElId}`)){
-                                    return
-                                }
-
                                 const choiceEl = document.getElementById(`${choiceElId}`)
-                                const choiceElChildren = choiceEl.children[0]
-                                const choiceElData = choiceElId.dataset.name
-                                const index = listAdditionalServices.indexOf(choiceElData)
+
+                                let choiceElChildren = ''
+                                if (!choiceEl){
+                                    return
+                                } else {
+                                    choiceElChildren = choiceEl.children[0]
+                                }
+                                const index = listAdditionalServices.indexOf(choiceElChildren)
                                 
                                 if (index !== -1) {
                                     listAdditionalServices.splice(index, 1)
@@ -618,7 +569,7 @@ buttonWrappers.addEventListener('click', (e) => {
                             const index = listAdditionalServices.indexOf(elId)
     
                             if(index == -1) {
-                                listAdditionalServices.push(nameService)
+                                listAdditionalServices.push(elId)
                             }
                         }
                     })
@@ -629,31 +580,39 @@ buttonWrappers.addEventListener('click', (e) => {
                 btn.classList.remove('inactiveBtn')
                 priceChange += value
 
+
+
             } else {
-
                 const id = btn.parentNode.getAttribute('id')
-                const nameService = btn.parentNode.dataset.name
 
-                if (id === '000000127'){
+                if (id === 'Устройство колодца'){
                     
-                    let secondInput = document.getElementById(`000000127`).nextElementSibling.children[1]
+                    let secondInput = document.getElementById(`${COAST_FOUNTAIN + 'input'}`)
+                    let secondInputCounters = document.getElementById(`${COAST_FOUNTAIN + 'numberCounter'}`)
+                    let secondInputProgressBar = document.getElementById(`${COAST_FOUNTAIN + 'progressBar'}`)
 
+                    secondInputProgressBar.style.width = 0 + 'px'
+                    secondInputCounters.style.left = 0 + 'px'
+                    secondInputCounters.textContent = 0
                     secondInput.value = 0
 
                     inputPriceChange = 0
                     
                     cost.textContent = startCost + priceChange + inputPriceChange
+                } else if (id === 'Скважина Пластик'){
 
-                } else if (id === '000000126'){
+                    let firstInput = document.getElementById(`${COAST_WELL + 'input'}`)
+                    let firstInputCounters = document.getElementById(`${COAST_WELL + 'numberCounter'}`)
+                    let firstInputProgressBar = document.getElementById(`${COAST_WELL + 'progressBar'}`)
 
-                    let firstInput = document.getElementById(`000000126`).nextElementSibling.children[1]
-
+                    firstInputProgressBar.style.width = 0 + 'px'
+                    firstInputCounters.style.left = 0 + 'px'
+                    firstInputCounters.textContent = 0
                     firstInput.value = 0
 
                     inputPriceChange = 0
                     
                     cost.textContent = startCost + priceChange + inputPriceChange
-
                 }
 
                 let choiceElsId = ''
@@ -678,9 +637,8 @@ buttonWrappers.addEventListener('click', (e) => {
                             elChildren = el.children[0]
                         }
 
-                        const dataEl = el.dataset.name
 
-                        const indexEl = listAdditionalServices.indexOf(dataEl)
+                        const indexEl = listAdditionalServices.indexOf(elId)
                         if (indexEl !== -1) {
 
                             listAdditionalServices.splice(indexEl, 1)
@@ -691,7 +649,7 @@ buttonWrappers.addEventListener('click', (e) => {
                         }
                         
                     })      
-                    const indexEl = listAdditionalServices.indexOf(nameService)
+                    const indexEl = listAdditionalServices.indexOf(id)
                     listAdditionalServices.splice(indexEl, 1)
                 } else if (choiceElsId && choice == 'cant choose without') {
 
@@ -704,9 +662,7 @@ buttonWrappers.addEventListener('click', (e) => {
                         } else {
                             elChildren = el.children[0]
                         }
-                        const dataEl = el.dataset.name
-
-                        const indexEl = listAdditionalServices.indexOf(dataEl)
+                        const indexEl = listAdditionalServices.indexOf(elId)
 
                         if (indexEl !== -1){
 
@@ -719,10 +675,10 @@ buttonWrappers.addEventListener('click', (e) => {
                         }
     
                     })                
-                    const indexEl = listAdditionalServices.indexOf(nameService)
+                    const indexEl = listAdditionalServices.indexOf(id)
                     listAdditionalServices.splice(indexEl, 1)
                 } else {
-                    if (id === '000000102' || id === '000000101') {
+                    if (id === '000000102' || id === '000000101' || id === '000000105') {
                         const facadeImitation = document.getElementById('000000144').querySelector('button')
 
                         if (facadeImitation.classList.contains('inactiveBtn')) {
@@ -731,13 +687,23 @@ buttonWrappers.addEventListener('click', (e) => {
                             facadeImitation.classList.remove('inactiveBtn')
                             priceChange += +facadeImitation.getAttribute('value')
                         }
-                    }
+                    } else if (id === '000000106') {
+                        const facadeImitation = document.getElementById('000000132').querySelector('button')
 
-                    if (id === '000000144'){
+                        if (facadeImitation.classList.contains('inactiveBtn')) {
+                            listAdditionalServices.push('Стены и потолки: имитация бруса')
+                            facadeImitation.classList.add('activeBtn')
+                            facadeImitation.classList.remove('inactiveBtn')
+                            priceChange += +facadeImitation.getAttribute('value')
+                        }
+                    } else if (id === '000000144'){
+                        return
+                    } else if (id === '000000132'){
                         return
                     }
 
-                    const indexEl = listAdditionalServices.indexOf(nameService)
+
+                    const indexEl = listAdditionalServices.indexOf(id)
                     listAdditionalServices.splice(indexEl, 1)
                 }
 
@@ -748,23 +714,36 @@ buttonWrappers.addEventListener('click', (e) => {
 
             }
 
+    
             cost.textContent = startCost + priceChange + inputPriceChange
-
         } else {
             const btn = target.parentNode.querySelector('button')
             const value = +btn.value
 
+
+            
     
             if (btn.classList.contains('inactiveBtn')) {
                 const id = btn.parentNode.getAttribute('id')
-                const nameService = btn.parentNode.dataset.name
 
+                
 
-                if (id === '000000127' || id === '000000126'){
+                if (id === 'Скважина Пластик' || id === 'Устройство колодца'){
                     return
                 }
-    
-                listAdditionalServices.push(nameService)
+
+                if (id === '000000101'){
+                    const el = document.getElementById('000000144').children[0]
+                    const secondEl = document.getElementById('000000105').children[0]
+                    if (el.classList.contains('inactiveBtn') && secondEl.classList.contains('inactiveBtn')){
+
+                        priceChange += +el.getAttribute('value')
+                        el.classList.add('activeBtn')
+                        el.classList.remove('inactiveBtn')
+                        listAdditionalServices.push('Имитация бруса')
+                    }
+                }
+                listAdditionalServices.push(id)
 
 
                 let choiceElsId = ''
@@ -773,7 +752,7 @@ buttonWrappers.addEventListener('click', (e) => {
 
                 if (choiceobj['cant choose without'][id]) {
                     choiceElsId = choiceobj['cant choose without'][id]
-                        choice = 'cant choose without'
+                    choice = 'cant choose without'
                 } else if (choiceobj['mutually exclusive'][id]){
                     choiceElsId = choiceobj['mutually exclusive'][id]
                     choice = 'mutually exclusive'
@@ -782,6 +761,7 @@ buttonWrappers.addEventListener('click', (e) => {
                 if (choiceElsId && choice == 'mutually exclusive') {
 
                     choiceElsId.forEach(elId => {
+                        
                         const el = document.getElementById(`${elId}`)
                         
                         let elChildren = ''
@@ -790,42 +770,36 @@ buttonWrappers.addEventListener('click', (e) => {
                         } else {
                             elChildren = el.children[0]
                         }
-                        
-                        const dataEl = el.dataset.name
-
                         if (choiceobj['cant choose without'][`${elId}`]){
-
                             const choiceEls = choiceobj['cant choose without'][`${elId}`]
                             choiceEls.forEach(choiceElId => {
-                                const choiceEl = document.getElementById(`${choiceElId}`)
-                                const choiceElChildren = choiceEl.children[0]
-                                const choiceElData = choiceElId.dataset.name
-                                const index = listAdditionalServices.indexOf(choiceElData)
+                                const choiceEl = document.getElementById(`${choiceElId}`).children[0]
+                                const index = listAdditionalServices.indexOf(choiceElId)
 
                                 if (index !== -1) {
                                     listAdditionalServices.splice(index, 1)
-                                    choiceElChildren.classList.add('inactiveBtn')
-                                    choiceElChildren.classList.remove('activeBtn')
-                                    priceChange -= +choiceElChildren.getAttribute('value')
+                                    choiceEl.classList.add('inactiveBtn')
+                                    choiceEl.classList.remove('activeBtn')
+                                    priceChange -= +choiceEl.getAttribute('value')
                                 }
                             })
                         }
-
+                        
                         if(elChildren.classList.contains('activeBtn')){
-
                             elChildren.classList.remove('activeBtn')
                             elChildren.classList.add('inactiveBtn')
                             
                             priceChange -= +elChildren.getAttribute('value')
-                            const index = listAdditionalServices.indexOf(dataEl)
-
+                            const index = listAdditionalServices.indexOf(elId)
+    
                             if(index != -1) {
                                 listAdditionalServices.splice(index, 1)
                             }
                         }
+
+
                     })
                 } else if (choiceElsId && choice == 'cant choose without'){
-
                     choiceElsId.forEach(elId => {
                         const el = document.getElementById(`${elId}`)
                         
@@ -835,32 +809,30 @@ buttonWrappers.addEventListener('click', (e) => {
                         } else {
                             elChildren = el.children[0]
                         }
-
-                        const dataEl = el.dataset.name
-
                         if (choiceobj['mutually exclusive'][id]){
                             const choiceEls = choiceobj['mutually exclusive'][id]
                             choiceEls.forEach(choiceElId => {
                                 if (choiceobj['cant be removed without'][elId]){
+                                    const element = document.getElementById(`${elId}`).children[0]
+                                    const indexEl = listAdditionalServices.indexOf(elId)
 
-                                    const indexEl = listAdditionalServices.indexOf(dataEl)
 
                                     if (indexEl !== -1) {
                                         listAdditionalServices.splice(indexEl, 1)
-                                        priceChange -= +elChildren.getAttribute('value')
-                                        elChildren.classList.add('inactiveBtn')
-                                        elChildren.classList.remove('activeBtn')
+                                        priceChange -= +element.getAttribute('value')
+                                        element.classList.add('inactiveBtn')
+                                        element.classList.remove('activeBtn')
                                     }
                                 }
-
-                                if (!document.getElementById(`${choiceElId}`)){
-                                    return
-                                }
-
                                 const choiceEl = document.getElementById(`${choiceElId}`)
-                                const choiceElChildren = choiceEl.children[0]
-                                const choiceElData = choiceElId.dataset.name
-                                const index = listAdditionalServices.indexOf(choiceElData)
+
+                                let choiceElChildren = ''
+                                if (!choiceEl){
+                                    return
+                                } else {
+                                    choiceElChildren = choiceEl.children[0]
+                                }
+                                const index = listAdditionalServices.indexOf(choiceElChildren)
                                 
                                 if (index !== -1) {
                                     listAdditionalServices.splice(index, 1)
@@ -880,7 +852,7 @@ buttonWrappers.addEventListener('click', (e) => {
                             const index = listAdditionalServices.indexOf(elId)
     
                             if(index == -1) {
-                                listAdditionalServices.push(nameService)
+                                listAdditionalServices.push(elId)
                             }
                         }
                     })
@@ -891,31 +863,39 @@ buttonWrappers.addEventListener('click', (e) => {
                 btn.classList.remove('inactiveBtn')
                 priceChange += value
 
+
+
             } else {
-
                 const id = btn.parentNode.getAttribute('id')
-                const nameService = btn.parentNode.dataset.name
 
-                if (id === '000000127'){
+                if (id === 'Устройство колодца'){
                     
-                    let secondInput = document.getElementById(`000000127`).nextElementSibling.children[1]
+                    let secondInput = document.getElementById(`${COAST_FOUNTAIN + 'input'}`)
+                    let secondInputCounters = document.getElementById(`${COAST_FOUNTAIN + 'numberCounter'}`)
+                    let secondInputProgressBar = document.getElementById(`${COAST_FOUNTAIN + 'progressBar'}`)
 
+                    secondInputProgressBar.style.width = 0 + 'px'
+                    secondInputCounters.style.left = 0 + 'px'
+                    secondInputCounters.textContent = 0
                     secondInput.value = 0
 
                     inputPriceChange = 0
                     
                     cost.textContent = startCost + priceChange + inputPriceChange
+                } else if (id === 'Скважина Пластик'){
 
-                } else if (id === '000000126'){
+                    let firstInput = document.getElementById(`${COAST_WELL + 'input'}`)
+                    let firstInputCounters = document.getElementById(`${COAST_WELL + 'numberCounter'}`)
+                    let firstInputProgressBar = document.getElementById(`${COAST_WELL + 'progressBar'}`)
 
-                    let firstInput = document.getElementById(`000000126`).nextElementSibling.children[1]
-
+                    firstInputProgressBar.style.width = 0 + 'px'
+                    firstInputCounters.style.left = 0 + 'px'
+                    firstInputCounters.textContent = 0
                     firstInput.value = 0
 
                     inputPriceChange = 0
                     
                     cost.textContent = startCost + priceChange + inputPriceChange
-
                 }
 
                 let choiceElsId = ''
@@ -940,9 +920,8 @@ buttonWrappers.addEventListener('click', (e) => {
                             elChildren = el.children[0]
                         }
 
-                        const dataEl = el.dataset.name
 
-                        const indexEl = listAdditionalServices.indexOf(dataEl)
+                        const indexEl = listAdditionalServices.indexOf(elId)
                         if (indexEl !== -1) {
 
                             listAdditionalServices.splice(indexEl, 1)
@@ -953,7 +932,7 @@ buttonWrappers.addEventListener('click', (e) => {
                         }
                         
                     })      
-                    const indexEl = listAdditionalServices.indexOf(nameService)
+                    const indexEl = listAdditionalServices.indexOf(id)
                     listAdditionalServices.splice(indexEl, 1)
                 } else if (choiceElsId && choice == 'cant choose without') {
 
@@ -966,9 +945,7 @@ buttonWrappers.addEventListener('click', (e) => {
                         } else {
                             elChildren = el.children[0]
                         }
-                        const dataEl = el.dataset.name
-
-                        const indexEl = listAdditionalServices.indexOf(dataEl)
+                        const indexEl = listAdditionalServices.indexOf(elId)
 
                         if (indexEl !== -1){
 
@@ -981,10 +958,10 @@ buttonWrappers.addEventListener('click', (e) => {
                         }
     
                     })                
-                    const indexEl = listAdditionalServices.indexOf(nameService)
+                    const indexEl = listAdditionalServices.indexOf(id)
                     listAdditionalServices.splice(indexEl, 1)
                 } else {
-                    if (id === '000000102' || id === '000000101') {
+                    if (id === '000000102' || id === '000000101' || id === '000000105') {
                         const facadeImitation = document.getElementById('000000144').querySelector('button')
 
                         if (facadeImitation.classList.contains('inactiveBtn')) {
@@ -993,14 +970,25 @@ buttonWrappers.addEventListener('click', (e) => {
                             facadeImitation.classList.remove('inactiveBtn')
                             priceChange += +facadeImitation.getAttribute('value')
                         }
-                    }
+                    } else if (id === '000000106') {
+                        const facadeImitation = document.getElementById('000000132').querySelector('button')
 
-                    if (id === '000000144'){
+                        if (facadeImitation.classList.contains('inactiveBtn')) {
+                            listAdditionalServices.push('Стены и потолки: имитация бруса')
+                            facadeImitation.classList.add('activeBtn')
+                            facadeImitation.classList.remove('inactiveBtn')
+                            priceChange += +facadeImitation.getAttribute('value')
+                        }
+                    } else if (id === '000000144'){
+                        return
+                    } else if (id === '000000132'){
                         return
                     }
 
-                    const indexEl = listAdditionalServices.indexOf(nameService)
+
+                    const indexEl = listAdditionalServices.indexOf(id)
                     listAdditionalServices.splice(indexEl, 1)
+
                 }
 
                 
@@ -1010,10 +998,9 @@ buttonWrappers.addEventListener('click', (e) => {
 
             }
 
+            
             cost.textContent = startCost + priceChange + inputPriceChange
         }
-
-        console.log(listAdditionalServices)
     }
 })
 
@@ -1023,8 +1010,18 @@ buttonWrappers.addEventListener('click', (e) => {
 const buttonsSpan = document.querySelectorAll('.secondBlock__service-span')
 const imgBtn = document.querySelector('.firstBlock__carousel-item')
 const modal = document.querySelector(`.modalMain.bgwhite`)
+const imgsField = document.querySelectorAll('.firstBlock__field-img')
 let slideIndexModal = 1;
 
+imgsField.forEach((imgField, index) => {
+    imgField.addEventListener('click', () => {
+        modal.classList.add('visible')
+        modal.classList.remove('notVisible')
+        document.body.style.overflow = 'hidden';
+        slideIndexModal = index + 1
+        showSlidesModal(slideIndexModal)
+    })
+})
 
 imgBtn.addEventListener('click', () => {
     modal.classList.add('visible')

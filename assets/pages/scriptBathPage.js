@@ -154,7 +154,6 @@ imgBtnModal.addEventListener('click', () => {
     slidesModal.forEach((slide, i) => {
         if (slide.classList.contains('active')){
             slideIndexModal = i + 1
-            console.log(slideIndexModal)
             showSlidesModal(slideIndexModal)
         }
     }) 
