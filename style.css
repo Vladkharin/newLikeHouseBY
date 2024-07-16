@@ -31,6 +31,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding-top: 10px;
+  height: 91px;
 }
 
 .firstBlock {
@@ -345,7 +346,7 @@ body {
   font-size: 40px;
 }
 
-.fourthAndThirdBlockTogether1200px__text {
+.fourthAndThirdBlockTogether__text {
   width: 140px;
   height: 48px;
   text-align: center;
@@ -393,6 +394,7 @@ body {
   display: flex;
   flex-direction: column;
   padding-left: 5px;
+  text-decoration: none;
 }
 
 .fourthAndThirdBlockTogether__tile-text {
@@ -990,6 +992,7 @@ body {
 
 .fourthAndThirdBlockTogether {
   display: flex;
+  padding-top: 100px;
 }
 
 .nav__item-title {
@@ -1358,7 +1361,7 @@ body {
     width: 200px;
   }
 
-  .fourthAndThirdBlockTogether1200px__text {
+  .fourthAndThirdBlockTogether__text {
     width: 140px;
     height: 48px;
     text-align: center;
@@ -1737,7 +1740,7 @@ body {
     border: 1px solid #000;
     font-size: 16px;
     font-weight: 400;
-    padding-left: 115px;
+    padding-left: 100px;
     padding-right: 20px;
     margin-top: 20px;
   }
@@ -1756,7 +1759,7 @@ body {
   }
   .feedBack__menu-flag {
     background: url("./assets/img/flags5.png");
-    background-position: -89px -51px;
+    background-position: -285px -281px;
     width: 18px;
     height: 18px;
     margin-top: 5px;
