@@ -1740,7 +1740,7 @@ body {
     border: 1px solid #000;
     font-size: 16px;
     font-weight: 400;
-    padding-left: 100px;
+    padding-left: 115px;
     padding-right: 20px;
     margin-top: 20px;
   }
@@ -1759,7 +1759,7 @@ body {
   }
   .feedBack__menu-flag {
     background: url("./assets/img/flags5.png");
-    background-position: -285px -281px;
+    background-position: -89px -51px;
     width: 18px;
     height: 18px;
     margin-top: 5px;
