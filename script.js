@@ -548,7 +548,7 @@ window.addEventListener("DOMContentLoaded", () => {
           error++;
         }
 
-        if (input.value.length !== 15 && input.value.length > 0) {
+        if (input.value.length !== 14 && input.value.length > 0) {
           formAddError(input, errorInfoTel);
           error++;
         }
